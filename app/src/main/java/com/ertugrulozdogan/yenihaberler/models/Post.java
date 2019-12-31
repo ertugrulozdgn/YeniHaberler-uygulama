@@ -102,4 +102,5 @@ public class Post {
     public void setUpdated_by(String updated_by) {
         this.updated_by = updated_by;
     }
+
 }

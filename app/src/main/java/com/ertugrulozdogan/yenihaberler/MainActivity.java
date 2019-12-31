@@ -20,6 +20,8 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static Post globalResponse ;
+
     public static final  String API_KEY = "API İÇİN KEY";
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -55,19 +57,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<Post> call, Response<Post> response) {
                 if(response.isSuccessful() && response.body().getId() != null){     //buradada getArticle() yazıyordu.
 
-//                    if (!articles.isEmpty()){
-//                        articles.clear();
-//                    }
-//
-//                    articles = response.body().getArticle();
-//                    adapter = new Adapter(articles, MainActivity.this);
-//                    recyclerView.setAdapter(adapter);
-//                    adapter.notifyDataSetChanged();
-
-
-
-                    //Burada benim sadece post modelim var....
-
+                    globalResponse = response.body();
 
                 }else{
                     Toast.makeText(MainActivity.this, "Sonuç Yok", Toast.LENGTH_SHORT).show();

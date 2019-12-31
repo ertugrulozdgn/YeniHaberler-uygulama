@@ -16,14 +16,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
+
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
 import com.ertugrulozdogan.yenihaberler.models.Post;
 
 import java.util.List;
@@ -60,27 +55,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL);
         requestOptions.centerCrop();
 
-        Glide.with(context)
-                .load(model.getTitle())         //Normalde Burada getUrlToImage yazıyordu.
-                .apply(requestOptions)
-                .listener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        holder.progressBar.setVisibility(View.GONE);
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        holder.progressBar.setVisibility(View.GONE);
-                        return false;
-                    }
-                })
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(holder.imageView);
-
         holder.title.setText(model.getTitle());
-        holder.time.setText(" \u2022" + Utils.DateToTimeFormat(model.getCreated_at()));
+        holder.summary.setText(model.getSummary() );
         holder.created_at.setText(Utils.DateFormat(model.getCreated_at()));
     }
 
@@ -99,9 +75,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView title, created_at ,author ,time;
-        ImageView imageView;
-        ProgressBar progressBar;
+        TextView title, created_at, summary;
         OnItemClickListener onItemClickListener;
 
         public MyViewHolder(View itemView, OnItemClickListener onItemCLickListener) {
@@ -110,12 +84,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
             itemView.setOnClickListener(this);
             title = itemView.findViewById(R.id.title);
-            author = itemView.findViewById(R.id.author);
             created_at = itemView.findViewById(R.id.created_at);
-            time = itemView.findViewById(R.id.time);
-            imageView = imageView.findViewById(R.id.img);
-            progressBar = itemView.findViewById(R.id.progress_load_photo);
-
+            summary = itemView.findViewById(R.id.summary);
             this.onItemClickListener = onItemCLickListener;
 
         }

@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    public static final String BASE_URL = "http://127.0.0.1:8000";
+    public static final String BASE_URL = "http://yenihaberler.site";
     public  static Retrofit retrofit;
 
     public static  Retrofit getApiClient(){
@@ -52,11 +52,11 @@ public class ApiClient {
                     }
             };
 
-            // Install the all-trusting trust manager
+
             final SSLContext sslContext = SSLContext.getInstance("SSL");
             sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
 
-            // Create an ssl socket factory with our all-trusting manager
+
             final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
 
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
