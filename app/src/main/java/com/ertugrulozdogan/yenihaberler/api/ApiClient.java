@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    public static final String BASE_URL = "http://yenihaberler.site";
+    public static final String BASE_URL = "http://yenihaberler.site/";
     public  static Retrofit retrofit;
 
     public static  Retrofit getApiClient(){
@@ -34,7 +34,7 @@ public class ApiClient {
     public static OkHttpClient.Builder getUnsafeOkHttpClient(){
 
         try {
-            // Create a trust manager that does not validate certificate chains
+            // github
             final TrustManager[] trustAllCerts = new TrustManager[]{
                     new X509TrustManager() {
                         @Override

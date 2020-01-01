@@ -3,6 +3,7 @@ package com.ertugrulozdogan.yenihaberler;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,16 +24,20 @@ import com.ertugrulozdogan.yenihaberler.models.Post;
 
 import java.util.List;
 
+import static com.ertugrulozdogan.yenihaberler.MainActivity.globalResponse;
+
 
 public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
+    public static Integer getItemIndex;
+
     private List<Post> posts;
     private Context context;
-    private OnItemClickListener onItemClickListener;
+    private OnItemClickListener onItemClickListener;       //Her tıkı kontrol ediyor.Bir iteme tıkladğımımda calısan bir fonk
 
 
 
-    public Adapter(List<Post> posts, Context context) {
+    public Adapter(List<Post> posts, Context context) {     //global response sonuc değeri.this=main.activity.adapterin parametreleri.
         this.posts = posts;
         this.context = context;
     }
@@ -47,7 +52,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holders, int position) {
         final  MyViewHolder holder = holders;
-        Post model = posts.get(position);
+        //    Post model = posts.get(position);
 
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.placeholder(Utils.getRandomDrawbleColor());
@@ -55,14 +60,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL);
         requestOptions.centerCrop();
 
-        holder.title.setText(model.getTitle());
-        holder.summary.setText(model.getSummary() );
-        holder.created_at.setText(Utils.DateFormat(model.getCreated_at()));
+        holder.title.setText(globalResponse.get(position).getTitle());      //index ine göre veriyi alıp title ını ve summary sini set ediyor.
+        holder.summary.setText(globalResponse.get(position).getSummary() );
+         holder.created_at.setText(globalResponse.get(position).getCreatedAt());
     }
 
     @Override
-    public int getItemCount() {
-        return posts.size();
+    public int getItemCount() {             //adapterin kaç tane datası(itemi) olduğunu döndüren fonksiyon.
+        return globalResponse.size();
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener){
@@ -93,7 +98,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         @Override
         public void onClick(View v) {
 
-            onItemClickListener.onItemClick(v, getAdapterPosition());
+            context.startActivity(new Intent(context, DetailActivity.class));  //activity ler arası geçiş için context kullandım.Tıklandığı zaman DetailActivity e gidecek.
+            getItemIndex = getLayoutPosition();  // artık hangi iteme tıklandığını detailactivity de çekebilecek şekilde indexi ayarladım.yani hangi habere tıklandığını anlicak.o itemi tutuyor.
         }
     }
 }

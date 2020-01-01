@@ -3,56 +3,47 @@ package com.ertugrulozdogan.yenihaberler.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 public class Post {
 
     @SerializedName("id")
     @Expose
-    private String id;
-
+    private Integer id;
     @SerializedName("user_id")
     @Expose
-    private String user_id;
-
+    private String userId;
     @SerializedName("title")
     @Expose
     private String title;
-
     @SerializedName("category")
     @Expose
     private String category;
-
     @SerializedName("summary")
     @Expose
     private String summary;
-
     @SerializedName("content")
     @Expose
     private String content;
-
     @SerializedName("created_at")
     @Expose
-    private String created_at;
-
-    @SerializedName("updated_by")
+    private String createdAt;
+    @SerializedName("updated_at")
     @Expose
-    private String updated_by;
+    private String updatedAt;
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getTitle() {
@@ -87,20 +78,20 @@ public class Post {
         this.content = content;
     }
 
-    public String getCreated_at() {
-        return created_at;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public String getUpdated_by() {
-        return updated_by;
+    public String getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdated_by(String updated_by) {
-        this.updated_by = updated_by;
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
 }

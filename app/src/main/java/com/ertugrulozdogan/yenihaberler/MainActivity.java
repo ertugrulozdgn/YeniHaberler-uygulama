@@ -20,14 +20,15 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static Post globalResponse ;
+    public static List<Post> globalResponse ;   //projenin heryerinden çekebilecğeim global sonuç değerim.static olmasının sebebi heryerden çekebiliyor olmam.
 
-    public static final  String API_KEY = "API İÇİN KEY";
+//    public static final  String API_KEY = "API İÇİN KEY";
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private List<Post> posts = new ArrayList<>();
-    private Adapter adapter;
+    public Adapter adapter;
     private String TAG = MainActivity.class.getSimpleName();
+    public Adapter productAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,40 +36,37 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.recyclerView);
-        layoutManager = new LinearLayoutManager(MainActivity.this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setNestedScrollingEnabled(false);
+
 
         LoadJson();
+        productAdapter = new Adapter(globalResponse,this);          //interneten bulduğum adapter.java yı bağlama kodları.
+
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
     }
 
     public void LoadJson(){
 
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
-        String country = Utils.getCountry();
+        Call<List<Post>> call;
+        call = apiInterface.getNews();
 
-        Call<Post> call;
-        call = apiInterface.getNews(country,API_KEY);   //BURADA NEDEN GETNEWS() ANLAMADIM.NEDEN GETPOST() DEĞİL
-
-        call.enqueue(new Callback<Post>() {
+        call.enqueue(new Callback<List<Post>>() {
             @Override
-            public void onResponse(Call<Post> call, Response<Post> response) {
-                if(response.isSuccessful() && response.body().getId() != null){     //buradada getArticle() yazıyordu.
+            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+                globalResponse=response.body();
 
-                    globalResponse = response.body();
-
-                }else{
-                    Toast.makeText(MainActivity.this, "Sonuç Yok", Toast.LENGTH_SHORT).show();
-                }
-
+                recyclerView.setAdapter(productAdapter);  //onResponese nin içinde önce sonucu aldım,globaresponse ye attım.Artık bir sonuç olduğu için recyclerView ın adapterini bağlayabildik.
             }
 
             @Override
-            public void onFailure(Call<Post> call, Throwable t) {
-
+            public void onFailure(Call<List<Post>> call, Throwable t) {
+                System.out.println("Hata verdi" + t.getMessage());
             }
+
         });
     }
 }
