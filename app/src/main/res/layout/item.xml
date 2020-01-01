@@ -21,6 +21,7 @@
 
         <TextView
             android:text="Title"
+            android:fontFamily="sans-serif-black"
             android:id="@+id/title"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -37,6 +38,7 @@
 
         <TextView
             android:text="Summary"
+            android:fontFamily="sans-serif"
             android:id="@+id/summary"
             android:textSize="14sp"
             android:textStyle="normal"

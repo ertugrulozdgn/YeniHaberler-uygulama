@@ -1,5 +1,6 @@
 package com.ertugrulozdogan.yenihaberler;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -18,17 +19,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     public static List<Post> globalResponse ;   //projenin heryerinden çekebilecğeim global sonuç değerim.static olmasının sebebi heryerden çekebiliyor olmam.
 
-//    public static final  String API_KEY = "API İÇİN KEY";
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private List<Post> posts = new ArrayList<>();
     public Adapter adapter;
     private String TAG = MainActivity.class.getSimpleName();
     public Adapter productAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void LoadJson(){
 
+
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
         Call<List<Post>> call;
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 globalResponse=response.body();
 
                 recyclerView.setAdapter(productAdapter);  //onResponese nin içinde önce sonucu aldım,globaresponse ye attım.Artık bir sonuç olduğu için recyclerView ın adapterini bağlayabildik.
+
             }
 
             @Override
@@ -69,4 +72,5 @@ public class MainActivity extends AppCompatActivity {
 
         });
     }
+
 }
